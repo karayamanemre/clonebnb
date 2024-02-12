@@ -1,17 +1,17 @@
+import Colors from "@/constants/Colors";
 import { StyleSheet } from "react-native";
-import Colors from "./Colors";
 
 export const defaultStyles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#fdffff",
+		backgroundColor: "#FDFFFF",
 	},
 	inputField: {
 		height: 44,
 		borderWidth: 1,
-		borderColor: "#ababab",
+		borderColor: "#ABABAB",
 		borderRadius: 8,
-		padding: 18,
+		padding: 10,
 		backgroundColor: "#fff",
 	},
 	btn: {
@@ -24,7 +24,7 @@ export const defaultStyles = StyleSheet.create({
 	btnText: {
 		color: "#fff",
 		fontSize: 16,
-		fontFamily: "opens-b",
+		fontFamily: "mon-b",
 	},
 	btnIcon: {
 		position: "absolute",
@@ -36,5 +36,10 @@ export const defaultStyles = StyleSheet.create({
 		bottom: 0,
 		left: 0,
 		right: 0,
+		backgroundColor: "#fff",
+		paddingVertical: 10,
+		paddingHorizontal: 20,
+		borderTopColor: Colors.grey,
+		borderTopWidth: StyleSheet.hairlineWidth,
 	},
 });
