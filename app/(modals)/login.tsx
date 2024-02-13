@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
 	btnOutlineText: {
 		color: "#000",
 		fontSize: 16,
-		fontFamily: "mon-sb",
+		fontFamily: "opens-b",
 	},
 });
 
