@@ -73,7 +73,7 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
 								/>
 								<View>
 									<Text style={{ fontFamily: "opens-sb" }}>Where to?</Text>
-									<Text style={{ color: Colors.grey, fontFamily: "mon" }}>
+									<Text style={{ color: Colors.grey, fontFamily: "opens" }}>
 										Anywhere · Any week
 									</Text>
 								</View>
