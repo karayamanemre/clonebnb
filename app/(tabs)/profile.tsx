@@ -1,4 +1,12 @@
-import { View, Text, Button, StyleSheet } from "react-native";
+import {
+	View,
+	Text,
+	Button,
+	StyleSheet,
+	TouchableOpacity,
+	Image,
+	TextInput,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useAuth, useUser } from "@clerk/clerk-expo";
 import { Link } from "expo-router";
@@ -6,6 +14,7 @@ import Colors from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { defaultStyles } from "@/constants/Styles";
+import * as ImagePicker from "expo-image-picker";
 
 const Page = () => {
 	const { signOut, isSignedIn } = useAuth();
@@ -22,9 +31,34 @@ const Page = () => {
 		setEmail(user.emailAddresses[0].emailAddress);
 	}, [user]);
 
-	const onSaveUser = async () => {};
+	const onSaveUser = async () => {
+		try {
+			if (!firstName || !lastName) return;
+			await user?.update({
+				firstName,
+				lastName,
+			});
+		} catch (error) {
+			console.error(error);
+		}
+		setEditing(false);
+	};
 
-	const onCaptureImage = async () => {};
+	const onCaptureImage = async () => {
+		const result = await ImagePicker.launchImageLibraryAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.Images,
+			allowsEditing: true,
+			base64: true,
+			quality: 0.75,
+		});
+
+		if (!result.canceled) {
+			const base64 = `data:image/jpeg;base64,${result.assets[0].base64}`;
+			user?.setProfileImage({
+				file: base64,
+			});
+		}
+	};
 
 	return (
 		<SafeAreaView style={defaultStyles.container}>
@@ -36,6 +70,55 @@ const Page = () => {
 					color='black'
 				/>
 			</View>
+
+			{user && (
+				<View style={styles.card}>
+					<TouchableOpacity onPress={onCaptureImage}>
+						<Image
+							source={{ uri: user?.imageUrl }}
+							style={styles.avatar}
+						/>
+					</TouchableOpacity>
+					<View style={{ flexDirection: "row", gap: 6 }}>
+						{editing ? (
+							<View style={styles.editRow}>
+								<TextInput
+									value={firstName || ""}
+									onChangeText={setFirstName}
+									style={[defaultStyles.inputField, { width: 100 }]}
+								/>
+								<TextInput
+									value={lastName || ""}
+									onChangeText={setLastName}
+									style={[defaultStyles.inputField, { width: 100 }]}
+								/>
+								<TouchableOpacity onPress={onSaveUser}>
+									<Ionicons
+										name='checkmark-outline'
+										size={24}
+										color='black'
+									/>
+								</TouchableOpacity>
+							</View>
+						) : (
+							<View style={styles.editRow}>
+								<Text>
+									{firstName} {lastName}
+								</Text>
+								<TouchableOpacity onPress={() => setEditing(true)}>
+									<Ionicons
+										name='create-outline'
+										size={24}
+										color='black'
+									/>
+								</TouchableOpacity>
+							</View>
+						)}
+					</View>
+					<Text>{email}</Text>
+					<Text>Since {user?.createdAt?.toLocaleDateString()}</Text>
+				</View>
+			)}
 
 			{isSignedIn && (
 				<Button
@@ -94,6 +177,7 @@ const styles = StyleSheet.create({
 		backgroundColor: Colors.grey,
 	},
 	editRow: {
+		height: 40,
 		flex: 1,
 		flexDirection: "row",
 		alignItems: "center",
