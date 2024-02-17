@@ -16,10 +16,11 @@ import Animated, { FadeInUp, FadeOutDown } from "react-native-reanimated";
 
 interface Props {
 	listings: any[];
+	refresh: number;
 	category: string;
 }
 
-const Listings = ({ listings: items, category }: Props) => {
+const Listings = ({ listings: items, category, refresh }: Props) => {
 	const [loading, setLoading] = useState(false);
 	const listRef = useRef<FlatList>(null);
 

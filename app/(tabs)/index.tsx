@@ -6,6 +6,7 @@ import Listings from "@/components/Listings";
 import listingsData from "@/assets/data/airbnb-listings.json";
 import ListingsMap from "@/components/ListingsMap";
 import listingsDataGeo from "@/assets/data/airbnb-listings-geo.geo.json";
+import ListingBottomSheet from "@/components/ListingBottomSheet";
 
 const Page = () => {
 	const [category, setCategory] = useState("Tiny homes");
@@ -23,11 +24,12 @@ const Page = () => {
 					header: () => <ExploreHeader onCategoryChanged={onDataChanged} />,
 				}}
 			/>
-			{/* <Listings
+
+			<ListingsMap listings={listingsDataGeo} />
+			<ListingBottomSheet
 				listings={items}
 				category={category}
-			/> */}
-			<ListingsMap listings={listingsDataGeo} />
+			/>
 		</View>
 	);
 };
