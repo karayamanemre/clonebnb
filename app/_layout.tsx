@@ -118,6 +118,7 @@ function RootLayoutNav() {
 				options={{
 					presentation: "transparentModal",
 					animation: "fade",
+					headerTransparent: true,
 					headerLeft: () => (
 						<TouchableOpacity onPress={() => router.back()}>
 							<Ionicons
