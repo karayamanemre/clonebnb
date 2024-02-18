@@ -58,6 +58,7 @@ const Page = () => {
 	const onClearAll = () => {
 		setSelectedPlace(0);
 		setOpenCard(0);
+		setGroups(guestsGropus);
 	};
 
 	return (
